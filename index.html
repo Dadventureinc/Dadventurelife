@@ -699,32 +699,67 @@ window.addEventListener('load', () => {
 
 // ── BLOG GRID ────────────────────────────────────────────────
 const blogPosts = [
-  {cat:'Fatherhood',emoji:'👨‍👧',title:'The Day Everything Changed',desc:'On becoming a dad and what nobody tells you beforehand.'},
-  {cat:'Cooking',emoji:'🍳',title:'Dad Does Dinner: Episode 1',desc:'The first episode. The eggplant. The chaos.'},
-  {cat:'Adventure',emoji:'🗺️',title:'A is for Aquarium',desc:'Kicking off the ABC Edition with sea creatures and snacks.'},
-  {cat:'Community',emoji:'🧹',title:'Year One: Cap Hill Cleanup',desc:'Why I grabbed trash bags on a Saturday and never stopped.'},
-  {cat:'Gear',emoji:'⚙️',title:'The Dad Bag: What\'s Actually In It',desc:'An honest look at what every dad should carry.'},
-  {cat:'Travel',emoji:'✈️',title:'Flying With a Toddler: Survival Guide',desc:'It\'s possible. Barely. Here\'s how.'},
-  {cat:'Fatherhood',emoji:'💬',title:'Things My Dad Never Said (That I Say Every Day)',desc:'The script changed. That\'s a good thing.'},
-  {cat:'Cooking',emoji:'🌮',title:'Taco Tuesday Is Sacred',desc:'A defense of the weekly ritual and why it matters.'},
-  {cat:'Adventure',emoji:'🏔️',title:'B is for Bike Ride',desc:'Two wheels, one very excited kid, zero falls. A miracle.'},
-  {cat:'Wellness',emoji:'💪',title:'Staying Active After Kids',desc:'Your health is parenting. Here\'s how I kept moving.'},
-  {cat:'Community',emoji:'🤝',title:'Year Two: The Cleanup Grows',desc:'More bags, more neighbors, more heart.'},
-  {cat:'Gear',emoji:'🎒',title:'Best Backpacks for Dad Adventures',desc:'Tested on actual adventures with actual kids.'},
+  {emoji:'🇨🇺',title:'The Cuban Experience',desc:"We are all searching for something. A place where I found part of a dream — sitting in a Havana kitchenette watching a Yoruba ceremony unfold.",id:'1_8ItVkrL25jff5q_O5GHcOzycP9GtRq4kh2eG_dtkV0'},
+  {emoji:'🏜️',title:'Places to Trip: Morocco',desc:"A conversation at the Edge of Thought and Sand. What happened when I ate some mushrooms in the Sahara Desert outside of Merzouga.",id:'1zLz4afnPYKU10vSZvC7uUgQqUIPs_6rdGI0q_csKhy8'},
+  {emoji:'☁️',title:'A head full of clouds',desc:"Wonder, I love to wonder. I have my head almost literally in the clouds right now. I am sitting on the edge of the dock. The once bright green water o",id:'1eOM8H6aaR1hFOhKX5YBZO9bscNMjQOccXW0Al22d7FI'},
+  {emoji:'✨',title:'Choose good vibes, you must',desc:"There is this funny meme where Yoda is pictured from a scene in Star Wars where he finally passes away while talking to Luke Skywalker. The caption re",id:'17mmJyUjD7-__PZDREP25T0vBb3ktT_qAuzoK4bRmQM8'},
+  {emoji:'🎵',title:'City of Sound',desc:"Abraham Lincoln once said “if you are racist I will attack you with the North. And these are the principles that I carry with me in the workplace”. Ju",id:'1f06RHB0aXD_jOFwwrIeYBXfc_Qyk1LEhs9oXtuUfulY'},
+  {emoji:'🌍',title:'Corona Vision 2020',desc:"Corona Vision 2020  We\'ve been spending a lot of time out on our patio during quarantine. The girls and I love it. I’ve put a lot of thought and ener",id:'1U7QRkZtPsTbrlLXniptSp64wVlRPogUMLZa_mj4WVrU'},
+  {emoji:'🌹',title:'Concrete Rose',desc:"It’s morning on a Monday  Solemn, quiet and cold  Memories flood my morning mind  With thought of life both new and old  I sit in the stillness  And m",id:'1rvq2932J-Qnr43PBHHZLA_kSQ0oRbrpu5kVMgr7lvJQ'},
+  {emoji:'👧',title:'Daddy I did it',desc:"Daddy I Did it  I remember the look on her face when she popped up from crouching down and said “Daddy I did it\!” with proud excitement. It was the m",id:'1RUuhtpMRCDlLVw_Dq4LdYaUKmpUbkqCapGWhH8ULzLk'},
+  {emoji:'📅',title:'Date Dad... nice to meet me',desc:"Recently I have had a hard time wrapping my head around dating as a father. How do I go about it? What is important to me? What do I need vs what do I",id:'1hCmOn9-bYIEabEZqFC3OzDPv5x1Jh_WoHTtBSKu3nK8'},
+  {emoji:'🐕',title:'Dogs Like Blueberries',desc:"Dogs Like Blueberries  “Alexa\! Can dogs eat blueberries?\!” Shouts my daughter Sarah from the living room in her high pitched squeaky voice full of g",id:'1iVSWI13pWNx1IZDfVSxX-HLW2aIVd3kZZxnFUWaOjZ8'},
+  {emoji:'🍽️',title:'Food for Thought',desc:"Food for Thought  There is a verse from the Bible that has stuck with me since I was a young child. I didn’t quite appreciate it in my youth but as a ",id:'15VpQokvVMi9EyjYlkbxjLlmkoaf37ey8VYG0CWYl09M'},
+  {emoji:'☀️',title:'Days Like This',desc:"Van Morrison said “my mamma told me, there’ll be days like this”.The Celtic folk tune was written in 1995 and will forever remain a classic. The Irish",id:'1t1gEvv0PPv_AOpsgO3j1nJmjLAHCdW-tbaBHrNmoOQY'},
+  {emoji:'💫',title:'Higher love',desc:"Higher Love  One morning in the car my daughters and I were jamming out to Kygo and Whitney Houston’s remake of Steve Winwood\'s 1986 number one hit s",id:'14usOQ87d4WGL5AUHxMcVgtipiC6wsb5iPOd7YxMxPxI'},
+  {emoji:'📝',title:'Dear me',desc:"Writing is an important skill to attempt every day. I typically like to write in a leather journal with a pen. There is something about the oldness of",id:'1DsUHjCNfonwR6Z5uAGxoL7ptY-T-3hFXJTSgByz4cB0'},
+  {emoji:'✈️',title:'Discover your innocence abroad',desc:"I read somewhere once that, travel is the only thing you can spend your money on that makes you richer. It isn\'t always easy and it doesn\'t always g",id:'15UTMbM2LLWZ6SWk1lLCp1jcXxYv-tOGt9nDadUboqYI'},
+  {emoji:'🦕',title:'Its okay to lick dinosaurs',desc:"“It’s okay to lick Dinsours”  One of the things that I love about my girls is their understanding of the world. Everything is so matter of fact. “Dadd",id:'1-reRcnZ9PUPzJe-D9ASm7KMQz7wUphX2C53TTqUcHOw'},
+  {emoji:'🎸',title:'How Paul Simon Taught Me Mindfulness',desc:"Every night I put my daughters to bed we have the same routine. I read and then sing three songs. They each pick a song, and I pick one. I do this for",id:'18TUShodxhKqS3ZHZ93pCDTqo8c5P8VnjBvdLo_ATaGU'},
+  {emoji:'📞',title:'I just called ',desc:"So Coronavirus huh? As if there is anything else on people\'s minds. Who would’ve thought the entire world would be staying inside avoiding each other",id:'1gjKDCt9Aytbqj5DZyKeTA-snaHIXaQaFAY-FT9eROUo'},
+  {emoji:'🎨',title:'Life in Technicolor',desc:"Life in Technicolor  Technicolor was the [brand](https://www.collinsdictionary.com/us/dictionary/english/brand) name process for a system of making co",id:'14brfkUqq0Rbc3RjNVuF-bM0EoCKWN2xyzcmbS_aP00g'},
+  {emoji:'🍀',title:'Me, Myself & Ireland',desc:"Me, Myself & Ireland  I am a firm believer and advocate for all things abroad. Wherever abroad may be. You know that feeling you get when you see one ",id:'1sz527qmKKlVXJRKboQyyghQ5Tfgi_f1YlmPAjHv9vAE'},
+  {emoji:'🎭',title:'Masturdates',desc:"Mas-tur-date  Verb  /to take oneself out on a date.  It is important to me to make sure I get away from others and spend time checking in with myself.",id:'1B3OoAJEjfFN2M8Yaqc64ePx_2tSvxlcm6wJXWrwer98'},
+  {emoji:'💭',title:'Meaning',desc:"One morning on the way to school my daughter Clare wanted to play a rhyming game.    “Daddy, I’ll say a word and then we have to think of words that r",id:'1_VQT-eDjNuLM3_O23QtJdUiUoE0c4_5eqMQFWbYX-5o'},
+  {emoji:'🧘',title:'Meditation',desc:"I grew up in the beautiful state of Idaho near the southern border in the town of Twin Falls. My experience growing up there was heavily influenced by",id:'1rItUFMZYVoRE2ly-z5r7-SZyQfhZRvgS8jHua9l34PI'},
+  {emoji:'🌸',title:'Perfect is Boring',desc:"My friend said it best the other day. Perfect is boring. We were talking about how crazy the world is right now and how to manage our way through it. ",id:'1vMckNS_ADraibwIKnGeT3ywR4d36cZl_YBrC6vVdVug'},
+  {emoji:'🏜️',title:'Moab',desc:"Moab  Even the name emits a deep tone when you say it. Like the name of an ancient god, when uttered shakes the ground and rumbles the valleys. It evo",id:'1l1ORD-wXuY-koHS-B56gDJQsLI4YIQzI_9juIxqh3w8'},
+  {emoji:'🌊',title:'Pura Vida!',desc:"Pura Vida. It means “pure life”. It is the common phrase here in Costa Rica. “Thanks for the coffee” - “Pura Vida”.... “Como esta?” - “Pura Vida”, “ha",id:'1BwnrkEOfIiIkiKF3OZ0vrMu9CRoAwRs3gv7IbJgzXuk'},
+  {emoji:'🎪',title:'Pure Imagination',desc:"I believe hope and inspiration to be more powerful forces than despair and doubt. I may be a skeptic by nature but I try to balance that with realisti",id:'1J64-TjcyEChKULl3UGufD1NOXwk3dC8FnXO4UrYa8EE'},
+  {emoji:'🏄',title:'Soul Surfing',desc:"Soul Surfing  I like to do something I call soul surfing. I take a night, a weekend, a trip, a hike and use the time to connect with myself. Soul surf",id:'1QX4nSC4TFzmcC-VsgeBWHh93y3tny-ZMTG9wysBzO18'},
+  {emoji:'🏔️',title:'The Mountains are calling',desc:"I write in a journal every day but only spend time crafting it into something consumable and coherent when I have a little downtime. The more I write ",id:'1W73WBG1wYZlrhBiglw2FaWlWxhdrcdtaxtxFwwwiOPM'},
+  {emoji:'🏆',title:'Reflections on losing',desc:"People like to debate whether Michael Jordan is still considered the greatest basketball player of all time. One thing no one debates is whether Air J",id:'1i5z6EOm8RnFdtL2ciDa7GWyzwgaioIXS2y7lGaKBNug'},
+  {emoji:'🤳',title:'Selfie conscious',desc:"I used to be selfie conscious. Meaning that I used to be really insecure about taking selfies. I partly think it\'s a generational thing. Growing up, ",id:'1F4cPSX-dRNDXNj43u9s9GEKqBipJfQvOuQTiIPN4Rgs'},
+  {emoji:'⭐',title:'Shine',desc:"Dating is hard. For those of you who don\'t know this try it out for the first time after 12 years. I actually started doing it after my divorce. I wa",id:'1KurphHt-kNSztRkohZL6h5dwfZQZODNN7D9jFC5JUMU'},
+  {emoji:'👂',title:'The Patron Saint of Listening',desc:"Papa died this weekend. He was the Patron of our family; a caring and steadfast man. Harry Lincoln Marshall loved everyone. He didn’t judge you, regar",id:'1w08G003WxX3_XhVGgIrYOlxASO43Y5dKEr1ugCaP37Y'},
+  {emoji:'🌌',title:'The Space Between',desc:"Recently, a good family friend recommended “Writing Down Your Soul” by Janet Connor…a book that was suggested after a conversation about life. The tit",id:'17PfxND93DYlzztkU2D0EefbHvuOYBIdMdCDMGeR_5wI'},
+  {emoji:'🔄',title:'Transition Days',desc:"Transitioning kids between homes when families are split can be up and down. Sometimes after a great few days with my kids, I drop them off at school ",id:'1QHHf0_nHUV3E8RcrMvDDOl4XAohvbTlQoHYQF0zK7eM'},
+  {emoji:'🌿',title:'Two Days in the Congo',desc:"Once upon a time, I stepped across the border of Rwanda to the city of Goma in the Democratic Republic of Congo (DRC). I was traveling with three othe",id:'1g3xl0sKuJZ4y51TQrMVN2XRsm2CP1hr4OBAqNuGGuDY'},
+  {emoji:'♀️',title:'Venus',desc:"The planet Venus is known as the “morning and evening star” in astronomy because it can be seen right before sunrise and directly after sunset. The an",id:'1uBkliXfEnGRHvBWzvuXNmOUwHkQX80rTy8o8aB4qNGQ'},
+  {emoji:'🌊',title:'Waves',desc:"I think surfing is one of the coolest sports. I have limited experience doing it but always enjoy it and find it to be a great representation of how t",id:'10746sQlBD8MckdFsE8B3EyMKU2EOgzMIK6mZe1yrsUU'},
+  {emoji:'💪',title:'Weakness',desc:"Some days I feel like I’m losing my mind. At the end of each day I’m exhausted yet look back and can’t figure out what I actually did. It\'s like I’m ",id:'1bMZmL3OpkIeo4YkNYyUMyreBFPX7j0DexUERXZ86gRU'},
+  {emoji:'⏰',title:'While there is time... ',desc:"“While there is time. Let\'s go out and feel everything.” The opening lines of the song The Finer Things by Steve Winwood, released in 1986, has been ",id:'1PnHqr0gyNwyb1LuYEcte4gmpxbpwkbpWrBbRztpVa0g'},
+  {emoji:'🌼',title:'Wildflowers',desc:"The song Wildflowers by Tom Petty captures both the sentiments of love and beauty in melody and rhyme. It was released in 1994 and took Tom one take t",id:'1YXcvqz2hKI4oldCAMcFHufD0qUelyEZKS61yG2bPS78'},
+  {emoji:'👋',title:'wont you be my neighbor',desc:"If you haven’t seen the movie “A Beautiful Day in the Neighborhood” then take the time to see it soon. It\'s worth it and let\'s get real you’re going",id:'1SzeRxoC66rY8Z8CZClIM6nZ-LT9zTPUsxhaWawlk9sg'},
+  {emoji:'🌎',title:'Worlds inside worlds',desc:"I saw a meme the other day of a picture of outer space speckled with countless stars. It said each one of those points of light was a star then the ne",id:'1amQSNNHWR_J5lx2h6Fxen-101l8swMNINFlIWveyRV0'},
+  {emoji:'🎉',title:'Yippee ki-yay',desc:"Yippee Ki-Yay Christmas: Die Hard for Kids  It’s the holiday season and the number one question on everyone\'s mind? Is Die Hard a Christmas movie? Be",id:'1jEnFr8PfkbVKYzbauAupxxrZvZWbFNVnjBtt7VS8raQ'},
+  {emoji:'😊',title:'You can\'t always get what you want',desc:"I have a Spotify playlist called “Songs in the Key of Life” after the Stevie Wonder album. Funny thing is, it doesn’t actually have any Stevie Wonder ",id:'1fLAhXlaJ2oTFJ-ELz4g_KoOFPG_2_1tWPeW_DO_yHPE'},
+  {emoji:'🧭',title:'You don’t owe anyone an explanation',desc:"I saw a quote a few years ago that said “you don’t owe anyone an explanation for how you live your life”. It caught me off guard because it was advice",id:'1CcuWcdnVvd-D2KhVKzsAfUVT8xMhBRPgiq3_ge-iEoc'},
+  {emoji:'🌺',title:'Oh the Places You\'ll Go',desc:"I have the privilege of working for a really interesting company. We make packaging products for protecting important items in transit. So, it is espe",id:'17q2TK3-if1mc42xgx7YecN_xywY5iuXJecQFH7OTc6Y'},
+  {emoji:'☁️',title:'Pregis sustainability ',desc:"As I look out across the snow capped peaks opposite the heavily populated Colorado Super Chair on my way up to the top of Breckenridge’s Peak 8, I am ",id:'1CrermB4gdrhtOL_BFwNWW73DgzTRk0TcmxJHRVFFisU'}
 ];
 
 function buildBlogGrid() {
   const grid = document.getElementById('blog-grid');
   if (!grid) return;
   grid.innerHTML = blogPosts.map(p => `
-    <div class="card">
+    <div class="card" onclick="window.open('https://docs.google.com/document/d/${p.id}/edit','_blank')" style="cursor:pointer">
       <div class="card-img-placeholder">${p.emoji}</div>
       <div class="card-body">
-        <div class="card-cat">${p.cat}</div>
         <div class="card-title">${p.title}</div>
-        <div class="card-desc">${p.desc}</div>
+        <div class="card-desc">${p.desc}...</div>
       </div>
-      <div class="card-footer"><span class="card-read">Read More →</span></div>
+      <div class="card-footer"><span class="card-read">Read Full Post →</span></div>
     </div>
   `).join('');
 }
