@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dadventure — Adventure in Fatherhood</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0d14;--bg2:#13151f;--bg3:#1a1d2e;
+  --purple:#6b3fa0;--purple2:#9b6fd4;
+  --teal:#2a8c80;--teal2:#4db8a8;
+  --amber:#c49a2a;--amber2:#e0bb55;
+  --red:#c0392b;--red2:#e05c4b;
+  --text:#ece9f5;--muted:#8a8fa8;--subtle:#4a4e68;--border:#2a2d42;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --grad:linear-gradient(90deg,var(--red),var(--purple),var(--teal),var(--amber));
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:var(--sans);cursor:pointer}
+.grad-bar{height:4px;background:var(--grad)}
+nav{position:fixed;top:4px;left:0;right:0;z-index:100;background:rgba(12,13,20,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--serif);font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer}
+.nav-links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:500;color:var(--muted);padding:6px 10px;border-radius:6px;transition:all .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,0.06)}
+.nav-cta{background:linear-gradient(135deg,var(--red),var(--amber));border:none;color:#fff;font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+.page{display:none;padding-top:68px;min-height:100vh;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--bg)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,13,20,1) 0%,rgba(12,13,20,.6) 50%,rgba(12,13,20,.1) 100%)}
+.hero-content{position:relative;max-width:1280px;margin:0 auto;padding:0 40px 80px;width:100%}
+.hero-tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:16px}
+.hero h1{font-family:var(--serif);font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1.05;max-width:800px;margin-bottom:20px}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:18px;max-width:520px;margin-bottom:32px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--teal));border:none;color:#fff;font-size:14px;font-weight:700;padding:14px 28px;border-radius:8px;transition:opacity .2s;cursor:pointer}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{background:none;border:1px solid var(--border);color:var(--muted);font-size:14px;font-weight:600;padding:14px 28px;border-radius:8px;transition:all .2s;cursor:pointer}
+.btn-secondary:hover{border-color:var(--muted);color:var(--text)}
+section{padding:80px 40px;max-width:1280px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:12px}
+.section-title{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.15;margin-bottom:20px}
+.section-sub{color:var(--muted);font-size:16px;line-height:1.7;max-width:600px;margin-bottom:48px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s,border-color .2s;cursor:pointer}
+.card:hover{transform:translateY(-4px);border-color:var(--subtle)}
+.card-img-placeholder{width:100%;height:180px;background:linear-gradient(135deg,var(--bg3),var(--bg2));display:flex;align-items:center;justify-content:center;font-size:40px}
+.card-body{padding:20px}
+.card-cat{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px}
+.card-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.3;margin-bottom:10px}
+.card-desc{color:var(--muted);font-size:13px;line-height:1.6}
+.card-footer{padding:0 20px 20px;display:flex;align-items:center;justify-content:space-between}
+.card-read{font-size:13px;font-weight:600;color:var(--red2)}
+.stats-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-inner{max-width:1280px;margin:0 auto;padding:32px 40px;display:flex;gap:48px;flex-wrap:wrap}
+.stat-num{font-family:var(--serif);font-size:32px;font-weight:800;color:var(--amber2);line-height:1}
+.stat-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-top:6px}
+.dark-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 40px}
+.dark-section-inner{max-width:1280px;margin:0 auto}
+.series-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.series-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .2s;cursor:pointer}
+.series-card:hover{border-color:var(--purple2);transform:translateY(-2px)}
+.series-icon{font-size:36px;margin-bottom:16px}
+.series-name{font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:8px}
+.series-desc{color:var(--muted);font-size:13px;line-height:1.6}
+.form-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px}
+.form-card .grad-bar{border-radius:2px;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--teal)}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+.btn-toggle{padding:9px 16px;border-radius:6px;font-size:13px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.btn-toggle.active{border-color:var(--teal);background:rgba(77,184,168,.12);color:var(--teal2)}
+.event-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-bottom:1px solid var(--border);padding:80px 40px 60px;position:relative;overflow:hidden}
+.event-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad)}
+.event-badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.event-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:8px 14px;font-size:13px}
+.schedule{display:flex;flex-direction:column;gap:0}
+.schedule-item{display:flex;gap:20px;padding-bottom:24px;position:relative}
+.schedule-item:not(:last-child)::after{content:'';position:absolute;left:72px;top:28px;bottom:0;width:1px;background:var(--border)}
+.schedule-time{width:68px;flex-shrink:0;font-size:12px;font-weight:700;color:var(--teal2);padding-top:2px}
+.schedule-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;background:linear-gradient(135deg,var(--purple),var(--teal));box-shadow:0 0 0 3px var(--bg)}
+.sponsor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sponsor-slot{background:var(--bg2);border:1px solid var(--border);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;padding:12px}
+.sponsor-slot img{max-height:50px;width:auto;max-width:100%;object-fit:contain}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.resource-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;cursor:pointer;transition:all .2s}
+.resource-card:hover{border-color:var(--purple2);transform:translateY(-3px)}
+.resource-icon{font-size:32px;margin-bottom:16px}
+.resource-title{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:10px}
+.resource-desc{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:20px}
+.resource-link{font-size:13px;font-weight:600;color:var(--purple2)}
+.founders-perks{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:48px}
+.perk-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.perk-icon{font-size:28px;margin-bottom:12px}
+.perk-title{font-weight:700;margin-bottom:8px}
+.perk-desc{color:var(--muted);font-size:13px;line-height:1.6}
+.success-card{background:var(--bg2);border:1px solid rgba(77,184,168,.4);border-radius:16px;padding:40px;text-align:center}
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.value-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 40px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px}
+.footer-brand{font-family:var(--serif);font-size:24px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.footer-tagline{color:var(--muted);font-size:14px;line-height:1.6}
+.footer-heading{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{color:var(--muted);font-size:14px;transition:color .2s;cursor:pointer}
+.footer-links a:hover{color:var(--text)}
+.footer-bottom{max-width:1280px;margin:32px auto 0;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{color:var(--subtle);font-size:13px}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hero-content{padding:0 20px 60px}
+  section{padding:60px 20px}
+  .event-hero{padding:60px 20px 40px}
+  .footer-inner{grid-template-columns:1fr}
+  .sponsor-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="grad-bar" style="position:fixed;top:0;left:0;right:0;z-index:101"></div>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">DADVENTURE</div>
+    <div class="nav-links">
+      <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+      <a onclick="showPage('about')" id="nav-about">About</a>
+      <a onclick="showPage('stories')" id="nav-stories">News & Stories</a>
+      <a onclick="showPage('blog')" id="nav-blog">Blog</a>
+      <a onclick="showPage('resources')" id="nav-resources">Resources</a>
+      <a onclick="showPage('events')" id="nav-events">Events</a>
+      <a onclick="showPage('founders')" id="nav-founders">Founding Fathers</a>
+    </div>
+    <button class="nav-cta" onclick="showPage('subscribe')">Subscribe</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">The Fatherhood Lifestyle Magazine</div>
+      <h1>Where <span>Adventure</span><br>Meets Fatherhood</h1>
+      <p>Stories, gear, travel, and real talk for dads who show up — every single day.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('stories')">Read Latest Stories</button>
+        <button class="btn-secondary" onclick="showPage('events')">Cap Hill Cleanup →</button>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Original Series</div>
+    <h2 class="section-title">Built for Dads, By a Dad</h2>
+    <p class="section-sub">From the kitchen to the open road — Dadventure covers every corner of fatherhood.</p>
+    <div class="series-grid">
+      <div class="series-card" onclick="showPage('resources')"><div class="series-icon">🍳</div><div class="series-name">Dad Does Dinner</div><div class="series-desc">Weekly cooking adventures proving that dads can actually cook. Recipes, fails, and everything in between.</div></div>
+      <div class="series-card" onclick="showPage('resources')"><div class="series-icon">🗺️</div><div class="series-name">One Hour Dadventure</div><div class="series-desc">The ABC Edition — 26 adventures you can do with your kid in under an hour, one letter at a time.</div></div>
+      <div class="series-card" onclick="showPage('stories')"><div class="series-icon">📖</div><div class="series-name">News & Stories</div><div class="series-desc">The latest in fatherhood culture — curated reads, guest writers, and real stories from real dads.</div></div>
+      <div class="series-card" onclick="showPage('resources')"><div class="series-icon">⚙️</div><div class="series-name">Dad Gear Guide</div><div class="series-desc">Honest reviews of the gear that actually makes dad life easier. No fluff, just field-tested picks.</div></div>
+    </div>
+  </section>
+  <div class="dark-section">
+    <div class="dark-section-inner" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label" style="text-align:center">Community Event</div>
+      <h2 class="section-title" style="text-align:center">Cap Hill Cleanup<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">June 13 & 14, 2026</span></h2>
+      <p style="color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:32px">Four years of showing up for our neighborhood. Join us the weekend before Father's Day.</p>
+      <button class="btn-primary" onclick="showPage('events')">Sign Up Free →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <section>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+      <div>
+        <div class="section-label">Our Story</div>
+        <h1 class="section-title">Adventure in<br>Fatherhood</h1>
+        <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:16px">Dadventure started with a simple idea: fatherhood is the greatest adventure of a man's life — and it deserves to be treated that way.</p>
+        <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:16px">We're a fatherhood lifestyle brand and media platform for dads who lean into it. Who show up. Who cook dinner, plan the trip, clean the block, and still make time to be present.</p>
+        <p style="color:var(--muted);font-size:16px;line-height:1.8">Based in Denver, Colorado. Built for dads everywhere.</p>
+        <div class="values-grid">
+          <div class="value-card"><div style="font-size:24px;margin-bottom:10px">🧭</div><div style="font-weight:700;font-size:15px;margin-bottom:6px">Show Up</div><div style="color:var(--muted);font-size:13px">Be present. Every single day.</div></div>
+          <div class="value-card"><div style="font-size:24px;margin-bottom:10px">🌍</div><div style="font-weight:700;font-size:15px;margin-bottom:6px">Give Back</div><div style="color:var(--muted);font-size:13px">Leave things better than you found them.</div></div>
+          <div class="value-card"><div style="font-size:24px;margin-bottom:10px">🤝</div><div style="font-weight:700;font-size:15px;margin-bottom:6px">Community</div><div style="color:var(--muted);font-size:13px">Dad life is better together.</div></div>
+          <div class="value-card"><div style="font-size:24px;margin-bottom:10px">🎯</div><div style="font-weight:700;font-size:15px;margin-bottom:6px">Real Talk</div><div style="color:var(--muted);font-size:13px">No perfection. Just honest fatherhood.</div></div>
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;height:500px;display:flex;align-items:center;justify-content:center;font-size:80px">🧭</div>
+    </div>
+  </section>
+</div>
+
+<!-- NEWS & STORIES -->
+<div id="page-stories" class="page">
+  <section>
+    <div class="section-label">News & Stories</div>
+    <h1 class="section-title">The Dadventure Feed</h1>
+    <p class="section-sub">Curated stories, guest writers, and the latest in fatherhood culture.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-img-placeholder">👨‍👧</div><div class="card-body"><div class="card-cat">Fatherhood</div><div class="card-title">The Best Thing I Ever Did Was Slow Down</div><div class="card-desc">On presence, pace, and what our kids actually need from us.</div></div><div class="card-footer"><span class="card-read">Read More →</span></div></div>
+      <div class="card"><div class="card-img-placeholder">🏔️</div><div class="card-body"><div class="card-cat">Adventure</div><div class="card-title">Why Every Dad Should Plan One Big Trip a Year</div><div class="card-desc">It doesn't have to be expensive. It just has to happen.</div></div><div class="card-footer"><span class="card-read">Read More →</span></div></div>
+      <div class="card"><div class="card-img-placeholder">🍳</div><div class="card-body"><div class="card-cat">Dad Does Dinner</div><div class="card-title">Eggplant Parmesan: The Episode That Almost Broke Me</div><div class="card-desc">A cooking confession from someone who definitely knew what he was doing.</div></div><div class="card-footer"><span class="card-read">Read More →</span></div></div>
+      <div class="card"><div class="card-img-placeholder">🧹</div><div class="card-body"><div class="card-cat">Community</div><div class="card-title">Four Years of Cleaning Up Cap Hill</div><div class="card-desc">How a Saturday morning with trash bags turned into a neighborhood tradition.</div></div><div class="card-footer"><span class="card-read">Read More →</span><button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="showPage('events')">Join →</button></div></div>
+      <div class="card"><div class="card-img-placeholder">🎒</div><div class="card-body"><div class="card-cat">One Hour Dadventure</div><div class="card-title">A is for Aquarium: Our First ABC Edition Stop</div><div class="card-desc">Kicking off the alphabet with sea turtles and a very excited kid.</div></div><div class="card-footer"><span class="card-read">Read More →</span></div></div>
+      <div class="card"><div class="card-img-placeholder">💪</div><div class="card-body"><div class="card-cat">Wellness</div><div class="card-title">Dads Who Move: The Case for Staying Active After Kids</div><div class="card-desc">Your health is parenting too.</div></div><div class="card-footer"><span class="card-read">Read More →</span></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- BLOG -->
+<div id="page-blog" class="page">
+  <section>
+    <div class="section-label">The Blog</div>
+    <h1 class="section-title">Six Years of Stories</h1>
+    <p class="section-sub">47 posts from the trenches of fatherhood. Honest, unfiltered, and occasionally embarrassing.</p>
+    <div class="card-grid" id="blog-grid"></div>
+  </section>
+</div>
+
+<!-- RESOURCES -->
+<div id="page-resources" class="page">
+  <section>
+    <div class="section-label">Resources</div>
+    <h1 class="section-title">Everything a Dad Needs</h1>
+    <p class="section-sub">Gear, travel, cooking, adventures — curated for dads who want to do it right.</p>
+    <div class="resource-grid">
+      <div class="resource-card"><div class="resource-icon">🍳</div><div class="resource-title">Dad Does Dinner</div><div class="resource-desc">Weekly cooking series. Real recipes, real failures, real food. Season 1 now available.</div><div class="resource-link">Watch Episodes →</div></div>
+      <div class="resource-card"><div class="resource-icon">🗺️</div><div class="resource-title">Dad Adventures</div><div class="resource-desc">The One Hour Dadventure ABC Edition — 26 adventures, one letter at a time.</div><div class="resource-link">Start the List →</div></div>
+      <div class="resource-card"><div class="resource-icon">⚙️</div><div class="resource-title">Gear Guide</div><div class="resource-desc">Field-tested gear for dads. From diaper bags to camp stoves — honest reviews only.</div><div class="resource-link">Browse Gear →</div></div>
+      <div class="resource-card"><div class="resource-icon">✈️</div><div class="resource-title">Travel</div><div class="resource-desc">Family travel guides, weekend trips, and how to actually enjoy vacations with kids.</div><div class="resource-link">Plan a Trip →</div></div>
+      <div class="resource-card"><div class="resource-icon">📱</div><div class="resource-title">Social</div><div class="resource-desc">Follow Dadventure on Instagram and TikTok for daily content and behind-the-scenes dad life.</div><div class="resource-link">@dadventure.life →</div></div>
+      <div class="resource-card"><div class="resource-icon">🤝</div><div class="resource-title">Get Involved</div><div class="resource-desc">Volunteer for the Cap Hill Cleanup, become a guest writer, or partner with Dadventure.</div><div class="resource-link">Join the Mission →</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- EVENTS -->
+<div id="page-events" class="page">
+  <div class="event-hero">
+    <div style="max-width:1280px;margin:0 auto">
+      <div class="section-label">4th Annual Community Event</div>
+      <h1 style="font-family:var(--serif);font-size:clamp(34px,5vw,64px);font-weight:900;line-height:1.05;margin-bottom:16px">Cap Hill Cleanup<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">presented by Dadventure</span></h1>
+      <p style="color:var(--muted);font-size:17px;max-width:500px;margin-bottom:28px;line-height:1.7">Four years of showing up for our neighborhood. Join us the weekend before Father's Day.</p>
+      <div class="event-badges">
+        <div class="event-badge">📅 Sat & Sun, June 13–14, 2026</div>
+        <div class="event-badge">⏰ 9:00 AM – Noon</div>
+        <div class="event-badge">📍 Whole Foods, 11th & Emerson, Cap Hill</div>
+        <div class="event-badge">🎟️ Free to Attend</div>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1280px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:start">
+    <div>
+      <div style="margin-bottom:48px">
+        <div class="section-label">About the Event</div>
+        <h2 style="font-family:var(--serif);font-size:32px;font-weight:800;margin-bottom:16px">Dads Who Give a Damn</h2>
+        <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:16px">Three years ago, a handful of Cap Hill dads grabbed trash bags and spent a Saturday morning cleaning up their blocks. No agenda. No funding. Just a belief that neighborhoods are worth showing up for.</p>
+        <p style="color:var(--muted);font-size:16px;line-height:1.8">Now in its fourth year, the Cap Hill Cleanup happens the weekend before Father's Day. Gloves, bags, and good energy provided. Kids welcome. Dogs welcome. Dads mandatory.</p>
+      </div>
+      <div style="margin-bottom:48px">
+        <div class="section-label">Day-Of Schedule</div>
+        <h2 style="font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:24px">Both Days, Same Plan</h2>
+        <div class="schedule">
+          <div class="schedule-item"><div class="schedule-time">9:00 AM</div><div class="schedule-dot"></div><div><div style="font-weight:700;font-size:15px;margin-bottom:3px">Meet Up</div><div style="font-size:13px;color:var(--muted)">Whole Foods parking lot, 11th & Emerson</div></div></div>
+          <div class="schedule-item"><div class="schedule-time">9:15 AM</div><div class="schedule-dot"></div><div><div style="font-weight:700;font-size:15px;margin-bottom:3px">Gear Up</div><div style="font-size:13px;color:var(--muted)">Gloves, bags & vests distributed</div></div></div>
+          <div class="schedule-item"><div class="schedule-time">9:30 AM</div><div class="schedule-dot"></div><div><div style="font-weight:700;font-size:15px;margin-bottom:3px">Hit the Block</div><div style="font-size:13px;color:var(--muted)">Teams fan out across Cap Hill</div></div></div>
+          <div class="schedule-item"><div class="schedule-time">11:30 AM</div><div class="schedule-dot"></div><div><div style="font-weight:700;font-size:15px;margin-bottom:3px">Wrap Up</div><div style="font-size:13px;color:var(--muted)">Haul bags, count the haul</div></div></div>
+          <div class="schedule-item"><div class="schedule-time">12:00 PM</div><div class="schedule-dot"></div><div><div style="font-weight:700;font-size:15px;margin-bottom:3px">Done!</div><div style="font-size:13px;color:var(--muted)">Celebration & community hangout</div></div></div>
+        </div>
+      </div>
+      <div style="margin-bottom:48px">
+        <div class="section-label">What to Bring</div>
+        <h2 style="font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:20px">Show Up Ready</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">👟</span><span style="font-size:14px">Closed-toe shoes</span></div>
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">☀️</span><span style="font-size:14px">Sunscreen</span></div>
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">💧</span><span style="font-size:14px">Water bottle</span></div>
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">👨‍👧</span><span style="font-size:14px">Your kids (encouraged!)</span></div>
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">🐕</span><span style="font-size:14px">Leashed dogs welcome</span></div>
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px"><span style="font-size:20px">💪</span><span style="font-size:14px">Good attitude</span></div>
+        </div>
+        <p style="font-size:13px;color:var(--subtle);margin-top:14px">Gloves, trash bags, and vests provided. No need to bring your own.</p>
+      </div>
+      <div>
+        <div class="section-label">Our Partners</div>
+        <h2 style="font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:20px">Thank You to Our Sponsors</h2>
+        <div class="sponsor-grid">
+          <div class="sponsor-slot"><div style="text-align:center;font-size:11px;color:var(--subtle)">CHUN</div></div>
+          <div class="sponsor-slot"><div style="text-align:center;font-size:11px;color:var(--subtle)">Keep Denver Beautiful</div></div>
+          <div class="sponsor-slot"><div style="text-align:center;font-size:11px;color:var(--subtle)">Locales Tequila</div></div>
+          <div class="sponsor-slot"><div style="text-align:center;font-size:11px;color:var(--subtle)">Denver DOT&I</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- SIGNUP FORM -->
+    <div style="position:sticky;top:88px">
+      <div id="event-form-wrap">
+        <div class="form-card">
+          <div class="grad-bar"></div>
+          <div class="section-label">Reserve Your Spot</div>
+          <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;line-height:1.2;margin-bottom:8px">Sign Up for the Cap Hill Cleanup</h3>
+          <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px">Free to attend. Sign up so we know how many supplies to bring. You'll also join the Dadventure newsletter.</p>
+          <div class="form-group">
+            <label>Which day(s)?</label>
+            <div class="btn-group">
+              <button class="btn-toggle" onclick="toggleDay(this,'saturday')">Sat June 13</button>
+              <button class="btn-toggle" onclick="toggleDay(this,'sunday')">Sun June 14</button>
+              <button class="btn-toggle active" onclick="toggleDay(this,'both')">Both Days!</button>
+            </div>
+            <input type="hidden" id="event-day" value="both">
+          </div>
+          <div class="form-group"><label>Full Name *</label><input type="text" id="ev-name" placeholder="Your name"></div>
+          <div class="form-group"><label>Email Address *</label><input type="email" id="ev-email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Zip Code</label><input type="text" id="ev-zip" placeholder="80218"></div>
+          <div class="form-group">
+            <label>How many people in your group?</label>
+            <div class="btn-group">
+              <button class="btn-toggle active" onclick="toggleAttend(this,'1')">1</button>
+              <button class="btn-toggle" onclick="toggleAttend(this,'2')">2</button>
+              <button class="btn-toggle" onclick="toggleAttend(this,'3')">3</button>
+              <button class="btn-toggle" onclick="toggleAttend(this,'4')">4</button>
+              <button class="btn-toggle" onclick="toggleAttend(this,'5+')">5+</button>
+            </div>
+            <input type="hidden" id="ev-attendees" value="1">
+          </div>
+          <button class="btn-primary" style="width:100%;padding:14px;font-size:15px;margin-top:8px" onclick="submitEvent()">Count Me In →</button>
+          <p style="font-size:11px;color:var(--subtle);text-align:center;margin-top:14px;line-height:1.6">By signing up you'll join the Dadventure newsletter. No spam — just good stories for dads.</p>
+          <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;text-align:center">
+            <div style="font-size:11px;color:var(--subtle)">Share this page</div>
+            <div style="font-size:12px;font-weight:600;color:var(--muted);margin-top:4px">dadventure.dad/events</div>
+          </div>
+        </div>
+      </div>
+      <div id="event-success" style="display:none">
+        <div class="success-card">
+          <div style="font-size:48px;margin-bottom:16px">🧹</div>
+          <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:12px">You're In!</h3>
+          <p id="success-msg" style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px"></p>
+          <div style="background:var(--bg3);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:20px">
+            <div style="font-size:12px;color:var(--subtle);margin-bottom:6px">📍 Meet us at</div>
+            <div style="font-size:14px;font-weight:600">Whole Foods Parking Lot</div>
+            <div style="font-size:13px;color:var(--muted)">11th & Emerson, Cap Hill</div>
+            <div style="font-size:13px;color:var(--teal2);margin-top:4px">9:00 AM sharp ⏰</div>
+          </div>
+          <button onclick="resetEventForm()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:9px 20px;border-radius:6px;font-size:13px;cursor:pointer">Register Another Person</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOUNDING FATHERS -->
+<div id="page-founders" class="page">
+  <div style="background:linear-gradient(135deg,rgba(107,63,160,.15),rgba(42,140,128,.1));border-bottom:1px solid var(--border);padding:80px 40px;text-align:center">
+    <div style="max-width:700px;margin:0 auto">
+      <div class="section-label" style="text-align:center">Exclusive Membership</div>
+      <h1 style="font-family:var(--serif);font-size:clamp(36px,5vw,60px);font-weight:900;line-height:1.1;margin-bottom:16px">Become a<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Founding Father</span></h1>
+      <p style="color:var(--muted);font-size:17px;line-height:1.7;margin-bottom:32px">The original crew. The dads who believed in Dadventure before it was cool. Limited founding memberships available.</p>
+      <button class="btn-primary" onclick="showPage('subscribe')">Join the Founding Fathers</button>
+    </div>
+    <div class="founders-perks" style="max-width:1280px;margin:48px auto 0">
+      <div class="perk-card"><div class="perk-icon">🏅</div><div class="perk-title">Founding Father Badge</div><div class="perk-desc">Permanent recognition as an original supporter of Dadventure.</div></div>
+      <div class="perk-card"><div class="perk-icon">📬</div><div class="perk-title">Exclusive Newsletter</div><div class="perk-desc">Behind-the-scenes content and early access to everything Dadventure.</div></div>
+      <div class="perk-card"><div class="perk-icon">🎟️</div><div class="perk-title">Event Priority</div><div class="perk-desc">First access to Dadventure events, cleanups, and community gatherings.</div></div>
+      <div class="perk-card"><div class="perk-icon">🤝</div><div class="perk-title">Direct Access</div><div class="perk-desc">Connect directly with the Dadventure community and founder.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSCRIBE -->
+<div id="page-subscribe" class="page">
+  <section style="max-width:600px;margin:0 auto">
+    <div class="section-label" style="text-align:center">Stay Connected</div>
+    <h1 class="section-title" style="text-align:center">Join the Dadventure Community</h1>
+    <p style="color:var(--muted);font-size:16px;line-height:1.7;text-align:center;margin-bottom:40px">Stories, gear picks, event updates, and real talk — delivered to your inbox. No spam. Just dad stuff.</p>
+    <div class="form-card">
+      <div class="grad-bar"></div>
+      <div id="sub-form">
+        <div class="form-group"><label>First Name</label><input type="text" id="sub-name" placeholder="Your name"></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="sub-email" placeholder="your@email.com"></div>
+        <div class="form-group">
+          <label>What kind of dad are you?</label>
+          <div class="btn-group">
+            <button class="btn-toggle active" onclick="this.classList.toggle('active')">New Dad</button>
+            <button class="btn-toggle" onclick="this.classList.toggle('active')">Toddler Dad</button>
+            <button class="btn-toggle" onclick="this.classList.toggle('active')">School-Age Dad</button>
+            <button class="btn-toggle" onclick="this.classList.toggle('active')">Teen Dad</button>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;padding:14px;font-size:15px;margin-top:8px" onclick="submitSubscribe()">Subscribe →</button>
+        <p style="font-size:11px;color:var(--subtle);text-align:center;margin-top:14px">Unsubscribe anytime. We respect your inbox.</p>
+      </div>
+      <div id="sub-success" style="display:none;text-align:center;padding:20px 0">
+        <div style="font-size:48px;margin-bottom:16px">🎉</div>
+        <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:12px">Welcome to Dadventure!</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7">You're in. First newsletter drops soon.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">DADVENTURE</div>
+      <div class="footer-tagline">Adventure in Fatherhood.<br>Based in Denver, CO.<br>dadventure.dad</div>
+    </div>
+    <div>
+      <div class="footer-heading">Explore</div>
+      <div class="footer-links">
+        <a onclick="showPage('stories')">News & Stories</a>
+        <a onclick="showPage('blog')">Blog</a>
+        <a onclick="showPage('resources')">Resources</a>
+        <a onclick="showPage('events')">Cap Hill Cleanup</a>
+        <a onclick="showPage('founders')">Founding Fathers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Connect</div>
+      <div class="footer-links">
+        <a href="https://instagram.com/dadventure.life" target="_blank">Instagram →</a>
+        <a href="https://tiktok.com/@dadventure.life" target="_blank">TikTok →</a>
+        <a onclick="showPage('subscribe')">Newsletter</a>
+        <a onclick="showPage('about')">About</a>
+        <a href="mailto:hello@dadventure.dad">hello@dadventure.dad</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Dadventure, Inc. Adventure in Fatherhood.</div>
+    <div style="font-size:13px;color:var(--subtle)">dadventure.dad</div>
+  </div>
+</footer>
+
+<script>
+// NAVIGATION
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + id);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  return false;
+}
+
+// BLOG
+const blogPosts = [
+  {emoji:'🏜️',title:'Places to Trip: Morocco',desc:"A conversation at the Edge of Thought and Sand. What happened when I ate some mushrooms in the Sahara.",id:'1zLz4afnPYKU10vSZvC7uUgQqUIPs_6rdGI0q_csKhy8'},
+  {emoji:'🇨🇺',title:'The Cuban Experience',desc:"We are all searching for something. A place where I found part of a dream in a Havana kitchenette.",id:'1_8ItVkrL25jff5q_O5GHcOzycP9GtRq4kh2eG_dtkV0'},
+  {emoji:'☁️',title:'A head full of clouds',desc:"Wonder, I love to wonder. I have my head almost literally in the clouds right now.",id:'1eOM8H6aaR1hFOhKX5YBZO9bscNMjQOccXW0Al22d7FI'},
+  {emoji:'✨',title:'Choose good vibes, you must',desc:"There is this funny meme where Yoda is pictured from a scene in Star Wars where he finally passes away.",id:'17mmJyUjD7-__PZDREP25T0vBb3ktT_qAuzoK4bRmQM8'},
+  {emoji:'🎵',title:'That song',desc:"Music and memory intertwined in ways only a dad would understand.",id:'1CveD9yhO6csGlnaQpJ75x_bWi6dNi9Jrio3CfV-qWBg'},
+  {emoji:'🌍',title:'10 Things I\'ve Learned From Traveling the World',desc:"Years of wandering distilled into lessons that changed how I parent.",id:'1f06RHB0aXD_jOFwwrIeYBXfc_Qyk1LEhs9oXtuUfulY'},
+  {emoji:'🌹',title:'Roses are red, violets are blue',desc:"A dad poem that goes places you wouldn't expect.",id:'1rvq2932J-Qnr43PBHHZLA_kSQ0oRbrpu5kVMgr7lvJQ'},
+  {emoji:'👧',title:'The little one who stole my heart',desc:"On daughters, wonder, and the specific kind of love that reorders everything.",id:'1U7QRkZtPsTbrlLXniptSp64wVlRPogUMLZa_mj4WVrU'},
+  {emoji:'📅',title:'One year in',desc:"Reflections after the first year of fatherhood. Nothing prepares you.",id:'1RUuhtpMRCDlLVw_Dq4LdYaUKmpUbkqCapGWhH8ULzLk'},
+  {emoji:'🐕',title:'Dogs like blueberries',desc:"What my dog taught me about slowing down and paying attention.",id:'1hCmOn9-bYIEabEZqFC3OzDPv5x1Jh_WoHTtBSKu3nK8'},
+  {emoji:'🍽️',title:'Dad Does Dinner',desc:"The origin story. The night I decided dads could actually cook.",id:'1t1gEvv0PPv_AOpsgO3j1nJmjLAHCdW-tbaBHrNmoOQY'},
+  {emoji:'☀️',title:'Summer in the city',desc:"Denver summers, neighborhood life, and raising kids in a place you love.",id:'1DsUHjCNfonwR6Z5uAGxoL7ptY-T-3hFXJTSgByz4cB0'},
+  {emoji:'💫',title:'Masturdates',desc:"On taking yourself on solo dates and why every dad needs to do it.",id:'1At_JPRwxghRo1Zg8yWTo6IirOjuN4-uqUcEREphc1Ik'},
+  {emoji:'📝',title:'The list',desc:"Things I want my kid to know. Written on a Tuesday, probably over coffee.",id:'15UTMbM2LLWZ6SWk1lLCp1jcXxYv-tOGt9nDadUboqYI'},
+  {emoji:'✈️',title:'Two days in the Congo',desc:"An adventure that changed everything I thought I knew about the world.",id:'1iVSWI13pWNx1IZDfVSxX-HLW2aIVd3kZZxnFUWaOjZ8'},
+  {emoji:'🦕',title:'It\'s okay to lick dinosaurs',desc:"On letting kids be weird, curious, and fully themselves.",id:'15VpQokvVMi9EyjYlkbxjLlmkoaf37ey8VYG0CWYl09M'},
+  {emoji:'🎸',title:'Music to my ears',desc:"The soundtrack of fatherhood and why it matters what your kids hear.",id:'14usOQ87d4WGL5AUHxMcVgtipiC6wsb5iPOd7YxMxPxI'},
+  {emoji:'📞',title:'The call',desc:"A story about the moment everything changed.",id:'18TUShodxhKqS3ZHZ93pCDTqo8c5P8VnjBvdLo_ATaGU'},
+  {emoji:'🎨',title:'Color outside the lines',desc:"Creativity, kids, and why we should all stop coloring inside the lines.",id:'1gjKDCt9Aytbqj5DZyKeTA-snaHIXaQaFAY-FT9eROUo'},
+  {emoji:'🍀',title:'Luck of the draw',desc:"On gratitude, perspective, and the randomness of a good life.",id:'1-reRcnZ9PUPzJe-D9ASm7KMQz7wUphX2C53TTqUcHOw'},
+  {emoji:'🎭',title:'Dad jokes and other crimes',desc:"A defense of the dad joke and its underrated role in family culture.",id:'14brfkUqq0Rbc3RjNVuF-bM0EoCKWN2xyzcmbS_aP00g'},
+  {emoji:'💭',title:'What I think about when I think about being a dad',desc:"Stream of consciousness from the passenger seat of a minivan.",id:'1B3OoAJEjfFN2M8Yaqc64ePx_2tSvxlcm6wJXWrwer98'},
+  {emoji:'🧘',title:'Ungerwear',desc:"The Colorado Trail, bad gear choices, and what the mountains teach you.",id:'1sz527qmKKlVXJRKboQyyghQ5Tfgi_f1YlmPAjHv9vAE'},
+  {emoji:'🌸',title:'Spring cleaning',desc:"The annual ritual of throwing things out and why it feels so good.",id:'1_VQT-eDjNuLM3_O23QtJdUiUoE0c4_5eqMQFWbYX-5o'},
+  {emoji:'🏜️',title:'Desert dad',desc:"What the desert teaches you about patience, heat, and perspective.",id:'1rItUFMZYVoRE2ly-z5r7-SZyQfhZRvgS8jHua9l34PI'},
+  {emoji:'🌊',title:'Soul surfing',desc:"On MDMA, fatherhood, and finding yourself in unexpected places.",id:'1l1ORD-wXuY-koHS-B56gDJQsLI4YIQzI_9juIxqh3w8'},
+  {emoji:'🎪',title:'The circus',desc:"Parenting is a circus. Here\'s what I\'ve learned as the ringmaster.",id:'17q2TK3-if1mc42xgx7YecN_xywY5iuXJecQFH7OTc6Y'},
+  {emoji:'🏄',title:'Ride the wave',desc:"On going with the flow and why control is the enemy of joy.",id:'1vMckNS_ADraibwIKnGeT3ywR4d36cZl_YBrC6vVdVug'},
+  {emoji:'🏔️',title:'The mountains are calling',desc:"A love letter to Colorado and the outdoors that shaped who I am.",id:'1CrermB4gdrhtOL_BFwNWW73DgzTRk0TcmxJHRVFFisU'},
+  {emoji:'🏆',title:'Winning at losing',desc:"On failure, resilience, and what we really want to teach our kids.",id:'1BwnrkEOfIiIkiKF3OZ0vrMu9CRoAwRs3gv7IbJgzXuk'},
+  {emoji:'🤳',title:'Screen time',desc:"An honest reckoning with phones, kids, and my own hypocrisy.",id:'1J64-TjcyEChKULl3UGufD1NOXwk3dC8FnXO4UrYa8EE'},
+  {emoji:'⭐',title:'Stargazing',desc:"Lying on the back lawn with a kid pointing at the sky.",id:'1i5z6EOm8RnFdtL2ciDa7GWyzwgaioIXS2y7lGaKBNug'},
+  {emoji:'👂',title:'Listen up',desc:"On the art of actually listening to your kids.",id:'1F4cPSX-dRNDXNj43u9s9GEKqBipJfQvOuQTiIPN4Rgs'},
+  {emoji:'🌌',title:'The universe is big',desc:"Perspective, wonder, and the gift of raising curious humans.",id:'1KurphHt-kNSztRkohZL6h5dwfZQZODNN7D9jFC5JUMU'},
+  {emoji:'🔄',title:'Full circle',desc:"When your kids start teaching you things.",id:'1QX4nSC4TFzmcC-VsgeBWHh93y3tny-ZMTG9wysBzO18'},
+  {emoji:'🌿',title:'Green thumb',desc:"On gardening, patience, and what grows when you pay attention.",id:'1W73WBG1wYZlrhBiglw2FaWlWxhdrcdtaxtxFwwwiOPM'},
+  {emoji:'💪',title:'Strong like dad',desc:"On fitness, aging, and staying strong for the people who need you.",id:'17PfxND93DYlzztkU2D0EefbHvuOYBIdMdCDMGeR_5wI'},
+  {emoji:'⏰',title:'Time flies',desc:"On the terrifying speed of childhood and what to do about it.",id:'1QHHf0_nHUV3E8RcrMvDDOl4XAohvbTlQoHYQF0zK7eM'},
+  {emoji:'🌼',title:'Wildflowers',desc:"A meditation on beauty, impermanence, and raising kids who notice things.",id:'1g3xl0sKuJZ4y51TQrMVN2XRsm2CP1hr4OBAqNuGGuDY'},
+  {emoji:'👋',title:'Goodbye for now',desc:"On transitions, goodbyes, and the bittersweet nature of growth.",id:'1uBkliXfEnGRHvBWzvuXNmOUwHkQX80rTy8o8aB4qNGQ'},
+  {emoji:'🌎',title:'World traveler',desc:"Raising kids who see the world as something to explore, not fear.",id:'10746sQlBD8MckdFsE8B3EyMKU2EOgzMIK6mZe1yrsUU'},
+  {emoji:'🎉',title:'Celebration',desc:"On marking milestones, big and small, and why it matters.",id:'1bMZmL3OpkIeo4YkNYyUMyreBFPX7j0DexUERXZ86gRU'},
+  {emoji:'😊',title:'Happy place',desc:"Finding your happy place and helping your kids find theirs.",id:'1PnHqr0gyNwyb1LuYEcte4gmpxbpwkbpWrBbRztpVa0g'},
+  {emoji:'🧭',title:'True north',desc:"On values, direction, and raising kids who know who they are.",id:'1YXcvqz2hKI4oldCAMcFHufD0qUelyEZKS61yG2bPS78'},
+  {emoji:'🌺',title:'In bloom',desc:"Spring, renewal, and the optimism that comes with new beginnings.",id:'1SzeRxoC66rY8Z8CZClIM6nZ-LT9zTPUsxhaWawlk9sg'},
+  {emoji:'🌱',title:'Planting seeds',desc:"On the long game of parenting and trusting the process.",id:'1amQSNNHWR_J5lx2h6Fxen-101l8swMNINFlIWveyRV0'},
+  {emoji:'💪',title:'Burning man',desc:"What a week in the desert taught me about community, art, and myself.",id:'1jEnFr8PfkbVKYzbauAupxxrZvZWbFNVnjBtt7VS8raQ'},
+  {emoji:'🏙️',title:'City dad',desc:"On raising kids in Denver and why urban fatherhood is underrated.",id:'1fLAhXlaJ2oTFJ-ELz4g_KoOFPG_2_1tWPeW_DO_yHPE'},
+];
+
+function buildBlog() {
+  const grid = document.getElementById('blog-grid');
+  if (!grid) return;
+  grid.innerHTML = blogPosts.map(p => `
+    <div class="card" onclick="window.open('https://docs.google.com/document/d/${p.id}/edit','_blank')">
+      <div class="card-img-placeholder">${p.emoji}</div>
+      <div class="card-body">
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.desc}</div>
+      </div>
+      <div class="card-footer"><span class="card-read">Read Full Post →</span></div>
+    </div>`).join('');
+}
+
+window.addEventListener('load', () => { showPage('home'); buildBlog(); });
+
+// EVENT FORM
+function toggleDay(btn, val) {
+  btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('event-day').value = val;
+}
+function toggleAttend(btn, val) {
+  btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ev-attendees').value = val;
+}
+function submitEvent() {
+  const name = document.getElementById('ev-name').value.trim();
+  const email = document.getElementById('ev-email').value.trim();
+  const day = document.getElementById('event-day').value;
+  if (!name || !email) { alert('Please enter your name and email.'); return; }
+  const signups = JSON.parse(localStorage.getItem('dav-cleanups') || '[]');
+  signups.push({name, email, day, ts: new Date().toISOString()});
+  localStorage.setItem('dav-cleanups', JSON.stringify(signups));
+  const dayText = day === 'both' ? 'both days' : day === 'saturday' ? 'Saturday June 13' : 'Sunday June 14';
+  document.getElementById('success-msg').textContent = `Thanks, ${name.split(' ')[0]}! We've got your spot for ${dayText}.`;
+  document.getElementById('event-form-wrap').style.display = 'none';
+  document.getElementById('event-success').style.display = 'block';
+}
+function resetEventForm() {
+  document.getElementById('ev-name').value = '';
+  document.getElementById('ev-email').value = '';
+  document.getElementById('ev-zip').value = '';
+  document.getElementById('event-form-wrap').style.display = 'block';
+  document.getElementById('event-success').style.display = 'none';
+}
+function submitSubscribe() {
+  const email = document.getElementById('sub-email').value.trim();
+  if (!email) { alert('Please enter your email.'); return; }
+  const subs = JSON.parse(localStorage.getItem('dav-subs') || '[]');
+  subs.push({email, ts: new Date().toISOString()});
+  localStorage.setItem('dav-subs', JSON.stringify(subs));
+  document.getElementById('sub-form').style.display = 'none';
+  document.getElementById('sub-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
