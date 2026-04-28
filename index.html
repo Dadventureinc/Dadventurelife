@@ -548,6 +548,18 @@ function submitEvent() {
   const signups = JSON.parse(localStorage.getItem('dav-cleanups') || '[]');
   signups.push({name, email, day, ts: new Date().toISOString()});
   localStorage.setItem('dav-cleanups', JSON.stringify(signups));
+  // Send to Kit
+  fetch('https://api.convertkit.com/v3/forms/9379734/subscribe', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      api_key: 'WeVc9Qs7g7qqsjS3kNAhwQ',
+      email: email,
+      first_name: name,
+      fields: { event_day: day }
+    })
+  }).catch(err => console.log('Kit error:', err));
+
   const dayText = day === 'both' ? 'both days' : day === 'saturday' ? 'Saturday June 13' : 'Sunday June 14';
   document.getElementById('success-msg').textContent = `Thanks, ${name.split(' ')[0]}! We've got your spot for ${dayText}.`;
   document.getElementById('event-form-wrap').style.display = 'none';
@@ -561,11 +573,26 @@ function resetEventForm() {
   document.getElementById('event-success').style.display = 'none';
 }
 function submitSubscribe() {
+  const name = document.getElementById('sub-name').value.trim();
   const email = document.getElementById('sub-email').value.trim();
   if (!email) { alert('Please enter your email.'); return; }
+  
+  // Save locally
   const subs = JSON.parse(localStorage.getItem('dav-subs') || '[]');
   subs.push({email, ts: new Date().toISOString()});
   localStorage.setItem('dav-subs', JSON.stringify(subs));
+  
+  // Send to Kit
+  fetch('https://api.convertkit.com/v3/forms/9379734/subscribe', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      api_key: 'WeVc9Qs7g7qqsjS3kNAhwQ',
+      email: email,
+      first_name: name
+    })
+  }).catch(err => console.log('Kit error:', err));
+  
   document.getElementById('sub-form').style.display = 'none';
   document.getElementById('sub-success').style.display = 'block';
 }
