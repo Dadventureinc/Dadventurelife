@@ -388,34 +388,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 40p
     <div class="section-label" style="text-align:center">Stay Connected</div>
     <h1 class="section-title" style="text-align:center">Join the Dadventure Community</h1>
     <p style="color:var(--muted);font-size:16px;line-height:1.7;text-align:center;margin-bottom:40px">Stories, gear picks, event updates, and real talk — delivered to your inbox. No spam. Just dad stuff.</p>
-    <div class="form-card">
-      <div class="grad-bar"></div>
-      <div id="sub-form">
-        <div class="section-label" style="margin-bottom:8px">Stay Connected</div>
-        <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:8px">Join The Sunday Dadventure</h3>
-        <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px">Every Sunday night — a dad joke, a story, an adventure, a recipe, and a question. No spam. Just good stuff.</p>
-        <div class="form-group"><label>First Name</label><input type="text" id="sub-name" placeholder="Your name"></div>
-        <div class="form-group"><label>Email Address *</label><input type="email" id="sub-email" placeholder="your@email.com"></div>
-        <div class="form-group">
-          <label>Who are you?</label>
-          <div class="btn-group">
-            <button class="btn-toggle active" onclick="selectType(this,'New Dad')">New Dad</button>
-            <button class="btn-toggle" onclick="selectType(this,'Toddler Dad')">Toddler Dad</button>
-            <button class="btn-toggle" onclick="selectType(this,'School-Age Dad')">School-Age Dad</button>
-            <button class="btn-toggle" onclick="selectType(this,'Teen Dad')">Teen Dad</button>
-            <button class="btn-toggle" onclick="selectType(this,'Other')">Other 🤝</button>
-          </div>
-          <input type="hidden" id="sub-type" value="New Dad">
-        </div>
-        <button class="btn-primary" style="width:100%;padding:14px;font-size:15px;margin-top:8px" onclick="submitSubscribe()">Subscribe →</button>
-        <p style="font-size:11px;color:var(--subtle);text-align:center;margin-top:14px">Unsubscribe anytime. We respect your inbox.</p>
-      </div>
-      <div id="sub-success" style="display:none;text-align:center;padding:20px 0">
-        <div style="font-size:48px;margin-bottom:16px">🎉</div>
-        <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:12px">Welcome to Dadventure!</h3>
-        <p style="color:var(--muted);font-size:14px;line-height:1.7">You're in. First newsletter drops Sunday night.</p>
-      </div>
-    </div>
+    <!-- Kit embed - handles subscription natively -->
+    <script async data-uid="f658f0e137" src="https://dadventure.kit.com/f658f0e137/index.js"></script>
   </section>
 </div>
 
