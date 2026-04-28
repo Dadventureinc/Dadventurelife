@@ -388,23 +388,34 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 40p
     <div class="section-label" style="text-align:center">Stay Connected</div>
     <h1 class="section-title" style="text-align:center">Join the Dadventure Community</h1>
     <p style="color:var(--muted);font-size:16px;line-height:1.7;text-align:center;margin-bottom:40px">Stories, gear picks, event updates, and real talk — delivered to your inbox. No spam. Just dad stuff.</p>
-<!-- KIT SUBSCRIBE FORM -->
-<script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-<form action="https://app.kit.com/forms/9379734/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9379734" data-uid="f658f0e137" data-format="inline" data-version="5" style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:100%">
-  <div class="grad-bar" style="border-radius:2px;margin-bottom:28px"></div>
-  <div class="section-label" style="text-align:center;margin-bottom:12px">Stay Connected</div>
-  <h3 style="font-family:var(--serif);font-size:26px;font-weight:800;text-align:center;margin-bottom:8px">Join The Sunday Dadventure</h3>
-  <p style="color:var(--muted);font-size:14px;line-height:1.6;text-align:center;margin-bottom:24px">Every Sunday night — a dad joke, a story, an adventure, a recipe, and a question. No spam. Just dad stuff.</p>
-  <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
-  <div data-element="fields" class="seva-fields formkit-fields" style="display:flex;flex-direction:column;gap:12px">
-    <input class="formkit-input" name="email_address" aria-label="Email Address" placeholder="your@email.com" required type="email" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;width:100%">
-    <button data-element="submit" class="formkit-submit" style="background:linear-gradient(135deg,var(--purple),var(--teal));border:none;color:#fff;font-size:15px;font-weight:700;padding:14px;border-radius:8px;cursor:pointer;width:100%">
-      <div class="formkit-spinner"><div></div><div></div><div></div></div>
-      <span>Subscribe to The Sunday Dadventure →</span>
-    </button>
-  </div>
-  <p style="font-size:11px;color:var(--subtle);text-align:center;margin-top:14px">Unsubscribe anytime. We respect your inbox.</p>
-</form>
+    <div class="form-card">
+      <div class="grad-bar"></div>
+      <div id="sub-form">
+        <div class="section-label" style="margin-bottom:8px">Stay Connected</div>
+        <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:8px">Join The Sunday Dadventure</h3>
+        <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px">Every Sunday night — a dad joke, a story, an adventure, a recipe, and a question. No spam. Just good stuff.</p>
+        <div class="form-group"><label>First Name</label><input type="text" id="sub-name" placeholder="Your name"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="sub-email" placeholder="your@email.com"></div>
+        <div class="form-group">
+          <label>Who are you?</label>
+          <div class="btn-group">
+            <button class="btn-toggle active" onclick="selectType(this,'New Dad')">New Dad</button>
+            <button class="btn-toggle" onclick="selectType(this,'Toddler Dad')">Toddler Dad</button>
+            <button class="btn-toggle" onclick="selectType(this,'School-Age Dad')">School-Age Dad</button>
+            <button class="btn-toggle" onclick="selectType(this,'Teen Dad')">Teen Dad</button>
+            <button class="btn-toggle" onclick="selectType(this,'Other')">Other 🤝</button>
+          </div>
+          <input type="hidden" id="sub-type" value="New Dad">
+        </div>
+        <button class="btn-primary" style="width:100%;padding:14px;font-size:15px;margin-top:8px" onclick="submitSubscribe()">Subscribe →</button>
+        <p style="font-size:11px;color:var(--subtle);text-align:center;margin-top:14px">Unsubscribe anytime. We respect your inbox.</p>
+      </div>
+      <div id="sub-success" style="display:none;text-align:center;padding:20px 0">
+        <div style="font-size:48px;margin-bottom:16px">🎉</div>
+        <h3 style="font-family:var(--serif);font-size:24px;font-weight:800;margin-bottom:12px">Welcome to Dadventure!</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7">You're in. First newsletter drops Sunday night.</p>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -566,27 +577,52 @@ function resetEventForm() {
   document.getElementById('event-form-wrap').style.display = 'block';
   document.getElementById('event-success').style.display = 'none';
 }
+function selectType(btn, val) {
+  btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sub-type').value = val;
+}
+
 function submitSubscribe() {
   const name = document.getElementById('sub-name').value.trim();
   const email = document.getElementById('sub-email').value.trim();
+  const type = document.getElementById('sub-type').value;
   if (!email) { alert('Please enter your email.'); return; }
-  
-  // Save locally
-  const subs = JSON.parse(localStorage.getItem('dav-subs') || '[]');
-  subs.push({email, ts: new Date().toISOString()});
-  localStorage.setItem('dav-subs', JSON.stringify(subs));
-  
-  // Send to Kit
-  fetch('https://api.convertkit.com/v3/forms/9379734/subscribe', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      api_key: 'WeVc9Qs7g7qqsjS3kNAhwQ',
-      email: email,
-      first_name: name
-    })
-  }).catch(err => console.log('Kit error:', err));
-  
+
+  // Create hidden form and submit to Kit
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://app.kit.com/forms/9379734/subscriptions';
+  form.target = 'kit-frame';
+
+  const fields = {
+    'email_address': email,
+    'first_name': name,
+    'fields[dad_type]': type
+  };
+
+  Object.entries(fields).forEach(([key, val]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = val;
+    form.appendChild(input);
+  });
+
+  // Hidden iframe to catch the response
+  let iframe = document.getElementById('kit-frame');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.name = 'kit-frame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+
+  // Show success
   document.getElementById('sub-form').style.display = 'none';
   document.getElementById('sub-success').style.display = 'block';
 }
