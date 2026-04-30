@@ -1,5 +1,20 @@
-<script>window.stop();</script>
+<script>
+  // This blocks the specific script that causes the "missing bundle" error
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.tagName === 'SCRIPT' && (node.src.includes('script.jsx') || node.type === 'text/babel')) {
+          node.remove();
+          console.log('Blocked React engine on blog page.');
+        }
+      });
+    });
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+</script>
 <!DOCTYPE html>
+<html lang="en">
+...<!DOCTYPE html>
 <html lang="en">
 <head>
 ...<!DOCTYPE html>
