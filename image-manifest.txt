@@ -1,0 +1,55 @@
+# Dadventure — Image Manifest
+# Save all files below into an /images folder next to index.html
+# Folder structure: dadventure/
+#   index.html
+#   style.css
+#   script.jsx
+#   images/
+#     logo.png
+#     (all files listed below)
+
+## LOGO (1 file)
+# Source: this chat — the compass logo PNG you uploaded
+# Save as: images/logo.png
+logo.png
+
+
+## BLOG POST IMAGES (27 files)
+# Source: all were uploaded to this chat — download each from the uploads panel
+# and save into your images/ folder keeping the filename exactly as shown.
+
+026C432A-4B27-406B-AA4E-20E0C6F7AF14_4_5005_c.jpeg   → Life in Technicolor
+07ED77B9-63DE-4C11-80D9-802DC4AC8430_1_105_c.jpeg    → Wildflowers
+0E7C5DA3-3FE4-4CAE-A961-1F552548C1B7_1_105_c.jpeg    → Soul Surfing
+105B453C-A9E5-4C99-8096-402387B267C9_1_105_c.jpeg    → City of Sound
+1E02A35C-33BE-42E8-A289-FD851896BA66_1_105_c.jpeg    → Daddy I Did It
+1FDEDDCC-AD51-443E-9781-EEF7482BE2F9_1_105_c.jpeg    → Havana Panorama
+24A6D719-B366-4B54-B631-DA900E5F01FE_1_105_c.jpeg    → All is Not Lost
+38FF8C10-B7BD-42F6-80C3-1BC498F67410_1_105_c.jpeg    → Moab
+40490404-2959-42E2-91F5-1171559C45E3_1_105_c.jpeg    → Feeling Groovy
+417AA171-A968-4EB7-81B8-86F0BE597C13_1_105_c.jpeg    → Papa
+48B0C675-FDB8-4B4B-846F-B38EFB3035C0_1_105_c.jpeg    → Dogs Like Blueberries
+5339E502-D488-4C90-BD8F-B08D37B7D4AA_1_105_c.jpeg    → Wonder
+5F7F7830-2BF4-4212-B264-D7085211EF2F_1_105_c.jpeg    → Innocents Abroad
+78805958-5BA1-4856-8821-9E8F5F5BA3F9_1_105_c.jpeg    → I Just Called to Say I Love You
+7BACF934-C6EC-4DC3-9242-0CB14B40E2CD_1_105_c.jpeg    → Pura Vida
+8A32CCF9-3659-45EC-8602-015FF78AB8BD_1_105_c.jpeg    → Heart of Darkness
+8E4347AD-48B5-4AE7-89ED-9E06FA2CD734_1_105_c.jpeg    → Me, Myself & Ireland
+AE9AB0EB-0D51-4714-A4C4-567375B4B385_1_105_c.jpeg    → The Finer Things
+Astral Weeks.webp                                     → Astral Weeks
+C7A6B65E-A6B2-426B-B353-0AF0568AF9A2_1_105_c.jpeg    → The Mountains Are Calling
+C962446E-F047-40AF-80BA-47EB7DBD27DB_1_105_c.jpeg    → Corona Vision 2020
+D46248FC-3510-4423-AFB5-9321F23BD8BC_1_105_c.jpeg    → Life is a Storm
+D956DADA-87EE-4966-81D6-F70AFC28205B_1_105_c.jpeg    → Masturdating
+F7677FAD-FB4D-4E87-97B6-8FF976022941_1_105_c.jpeg    → There'll Be Days Like This
+FF140C24-18B4-4F34-93BC-CE4255CD9519_1_105_c.jpeg    → Venus
+IMG_4418.jpeg                                         → Concrete Rose
+IMG_7871.jpeg                                         → Dadventure in the Desert
+
+
+## NOTES
+# - All other images (hero, stories, gear, travel cards) pull from
+#   picsum.photos which requires an internet connection. Replace those
+#   src URLs in script.jsx with your own hosted images when you go live.
+# - The RSS feed section requires internet to fetch live articles.
+# - The subscribe link points to: https://dadventure.kit.com/95e79d6e7e

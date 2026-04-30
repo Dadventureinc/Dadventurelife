@@ -1,0 +1,83 @@
+:root {
+  --bg:      #0c0d14;
+  --bg2:     #13151f;
+  --bg3:     #1a1d2e;
+  --bg4:     #22263a;
+  --purple:  oklch(52% 0.19 285);
+  --purple2: oklch(62% 0.15 285);
+  --teal:    oklch(57% 0.14 192);
+  --teal2:   oklch(68% 0.11 192);
+  --amber:   oklch(72% 0.14 66);
+  --amber2:  oklch(82% 0.10 66);
+  --text:    oklch(93% 0.007 250);
+  --muted:   oklch(62% 0.012 255);
+  --subtle:  oklch(42% 0.012 255);
+  --border:  oklch(27% 0.02 258);
+  --serif:   'Playfair Display', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; }
+button { font-family: var(--sans); cursor: pointer; }
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.label-accent { color: var(--teal2); }
+.label-amber  { color: var(--amber2); }
+.label-purple { color: var(--purple2); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+
+/* Transitions */
+.fade-in { animation: fadeIn 0.5s ease both; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: none; } }
+
+/* Gradient overlays */
+.img-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.img-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12,13,20,0.88) 0%, rgba(12,13,20,0.3) 60%, transparent 100%);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  width: 100%;
+}
+
+/* Grid */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .grid-3, .grid-2, .grid-4 { grid-template-columns: 1fr; }
+}
