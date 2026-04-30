@@ -21,5 +21,24 @@
 
   <!-- App -->
   <script type="text/babel" src="script.jsx"></script>
+  <!-- App -->
+    <script type="text/babel" src="script.jsx"></script>
+
+    <script>
+      // This forces the "Blog" links to leave the loop and go to your new page
+      setInterval(() => {
+        const blogLinks = document.querySelectorAll('a, button');
+        blogLinks.forEach(link => {
+          if (link.innerText.includes('Blog')) {
+            link.onclick = (e) => { 
+              e.preventDefault();
+              window.location.href = 'blog.html'; 
+            };
+          }
+        });
+      }, 1000);
+    </script>
+  </body>
+</html>
 </body>
 </html>
